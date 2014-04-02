@@ -9,6 +9,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.huskybus.tools.URLFileSaver;
 import com.huskybus.R;
@@ -43,6 +44,7 @@ public class GetRoutesTask extends AsyncTask<Void, Void, ArrayList<BusRoute>> {
 				URLFileSaver.downloadFromURL(urlString, "bus_routes.txt");
 			} catch (Exception e) {
 				e.printStackTrace();
+				Log.d("GetRoutes", "Failed to Connect");
 				return null;
 			}
 		}
