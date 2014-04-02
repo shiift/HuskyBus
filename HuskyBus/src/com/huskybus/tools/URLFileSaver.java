@@ -9,16 +9,21 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.http.util.ByteArrayBuffer;
+import com.huskybus.R;
 
+import android.app.Activity;
 import android.util.Log;
 
 public class URLFileSaver {
+	
+	public static Activity activity;
+	
 	public static void downloadFromURL(String DownloadUrl, String fileName) {
 
 		try {
 			File root = android.os.Environment.getExternalStorageDirectory();               
 
-			File dir = new File (root.getAbsolutePath() + "/uconnbus");
+			File dir = new File (root.getAbsolutePath() + activity.getString(R.string.storage_path));
 			if(dir.exists()==false) {
 				dir.mkdirs();
 			}

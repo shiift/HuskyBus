@@ -29,6 +29,8 @@ public class GetRoutesTask extends AsyncTask<Void, Void, ArrayList<BusRoute>> {
 		File root = android.os.Environment.getExternalStorageDirectory();
 		File file = new File(root.getAbsolutePath() + activity.getString(R.string.storage_path) + activity.getString(R.string.routes_file));
 		
+		URLFileSaver.activity = activity;
+		
 		Calendar lastModDate = Calendar.getInstance();
 		lastModDate.setTime(new Date(file.lastModified()));
 		Calendar currentDate = Calendar.getInstance();
