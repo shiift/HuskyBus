@@ -27,7 +27,7 @@ public class URLFileSaver {
 			if(dir.exists()==false) {
 				dir.mkdirs();
 			}
-
+			// New URL connection
 			URL url = new URL(DownloadUrl);
 			File file = new File(dir, fileName);
 
