@@ -2,10 +2,14 @@ package com.huskybus.managers;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.huskybus.R;
 import com.huskybus.generators.BusRoute;
 import com.huskybus.generators.BusStop;
 
@@ -20,19 +24,26 @@ public class MarkerManager {
 	
 	public void addMarker(BusStop busStop, BusRoute busRoute){
 		int mPosition = getStopMarkerIndex(busStop);
-		if(mPosition != -1){	// marker already in array at position mPosition
+		if(!busStop.textingKey.matches("") && mPosition != -1){	// marker already in array at position mPosition
 			MapMarker mapMarker = _stops.get(mPosition);
 			mapMarker.routes.add(busRoute);
 		}else{					// marker not in array
 			MapMarker mapMarker = new MapMarker();
 			copyStopInfo(busStop, mapMarker);
 			mapMarker.routes.add(busRoute);
-			Marker newMarker = _map.addMarker(new MarkerOptions()
-								.anchor(0.5f, 1.0f)
-								.position(new LatLng(busStop.latitude, busStop.longitude))
-								.title(busStop.textingKey)
-								.visible(true));
+			MarkerOptions newOptions = new MarkerOptions()
+											.anchor(0.5f, 1.0f)
+											.position(new LatLng(busStop.latitude, busStop.longitude))
+											.infoWindowAnchor(0.1f, 0.5f)
+											.title(busStop.description + " (" + busStop.textingKey + ")")
+											.icon(BitmapDescriptorFactory.fromResource(R.drawable.stopmarker))
+											.visible(true);
+			if(busStop.textingKey.matches("")){
+				newOptions.title(busStop.description);
+			}
+			Marker newMarker = _map.addMarker(newOptions);
 			mapMarker.marker = newMarker;
+			_stops.add(mapMarker);
 		}
 	}
 

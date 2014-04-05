@@ -45,16 +45,12 @@ public class MapManager {
 					polyLineOptions.add(new LatLng(lat,lng));
 				}
 				_markerManager.addMarker(cStop, cRoute);
-//				Marker newMarker = _map.addMarker(new MarkerOptions()
-//				.anchor(0.5f, 1.0f)
-//				.position(new LatLng(cStop.latitude,cStop.longitude))
-//				.visible(true));
 			}
 			Polyline polyline = _map.addPolyline(polyLineOptions);
 			cRoute.polyline = polyline;
 			_busRoutes.add(cRoute);
 		}
-		Log.d("BusStops", _markerManager.toString());
+		String s = _markerManager.toString();
 	}
 	
 }

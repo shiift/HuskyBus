@@ -76,6 +76,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 	}
 
 	public void createLines(GoogleMap map, ArrayList<BusRoute> busRoutes){
+		Log.d("mapinit","createStops");
 		_mapManager.createLines(busRoutes);
 	}
 
