@@ -34,9 +34,12 @@ import com.huskybus.R;
 
 public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpinnerListener{
 
+	//threads and tasks
 	MapManager _mapManager;
-	View _rootView;
 	GetRoutesTask _dft;
+	
+	//other member variables
+	View _rootView;
 
 	public BusMapFragment() {
 		_dft = null;
@@ -49,9 +52,13 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 		View rootView = inflater.inflate(R.layout.fragment_busmap, container,
 				false);
 		_rootView = rootView;
-
+		
+		Log.d("mapviewinit", "getting routes from web");
+		
 		_dft = new GetRoutesTask(getActivity(), this);
 		_dft.execute();
+		
+		Log.d("mapviewinit", "creating map manager");
 		
 		FragmentManager manager = getActivity().getSupportFragmentManager();
 		SupportMapFragment mapFragment =(SupportMapFragment) manager.findFragmentById(R.id.busmap);
@@ -75,9 +82,11 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 	}
 
-	public void createLines(GoogleMap map, ArrayList<BusRoute> busRoutes){
-		Log.d("mapinit","createStops");
-		_mapManager.createLines(busRoutes);
+	public void createLines(ArrayList<BusRoute> busRoutes){
+		Log.d("mapviewinit-buslines","adding bus lines to the map");
+		_mapManager.initBusRoutes(busRoutes);
+		_mapManager.run();
+		Log.d("mapviewinit-buslines", "done adding bus lines");
 	}
 
 	@Override
@@ -85,10 +94,15 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 		if(busRoutes == null){
 			new AlertDialog.Builder(this.getActivity())
 		    .setTitle("Could not connect to the network")
-		    .setMessage("Please enable network and click refresh")
-		    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		    .setMessage("Press okay to retry")
+		    .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int which) { 
-		        	// do nothing
+		        	// Do nothing
+		        }
+		     })
+		    .setPositiveButton(com.huskybus.R.string.retry, new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		        	_dft.execute();
 		        }
 		     })
 		    .show();
@@ -96,10 +110,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 //			MultiSpinner ms = (MultiSpinner) _rootView.findViewById(R.id.multi_spinner);
 //			ms.setItems(null, "No Routes Found", this);
 		}else{
-			FragmentManager manager = getActivity().getSupportFragmentManager();
-			SupportMapFragment mapFragment =(SupportMapFragment) manager.findFragmentById(R.id.busmap);
-			GoogleMap map = mapFragment.getMap();
-			createLines(map, busRoutes);
+			createLines(busRoutes);
 		}
 	}
 

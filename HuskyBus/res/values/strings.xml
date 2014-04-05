@@ -23,6 +23,7 @@
     <string name="swipe_here">&lt;&lt;&#8212;&#8212;&#160;&#160;&#160;&#160;Swipe Here&#160;&#160;&#160;&#160;&#8212;&#8212;&gt;&gt;</string>
     <string name="university">UConn</string>
     <string name="ok">OK</string>
+    <string name="retry">Retry</string>
     
     <!-- Settings Fragment -->
     <string name="title_section3">Settings</string>
