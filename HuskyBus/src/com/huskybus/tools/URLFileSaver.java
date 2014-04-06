@@ -15,9 +15,9 @@ import android.app.Activity;
 import android.util.Log;
 
 public class URLFileSaver {
-	
+
 	public static Activity activity;
-	
+
 	public static void downloadFromURL(String DownloadUrl, String fileName) {
 
 		try {

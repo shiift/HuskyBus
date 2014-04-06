@@ -15,7 +15,7 @@ public class MapMarker {
 	private double latitude;
 	private MarkerOptions markerOptions;
 	private Marker marker; 
-	
+
 	public MapMarker(){
 		setRoutes(new ArrayList<BusRoute>());
 		setDescription("");

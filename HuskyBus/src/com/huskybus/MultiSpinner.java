@@ -97,7 +97,7 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener,
 		for (int i = 0; i < selected.length; i++) {
 			selected[i] = false;
 		}
-		
+
 		// all text on the spinner
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
 				android.R.layout.simple_spinner_item, new String[] { allText });

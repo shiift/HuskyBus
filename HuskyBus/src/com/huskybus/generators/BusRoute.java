@@ -19,7 +19,7 @@ public class BusRoute{
 	private BusStop[] stops;
 	public PolylineOptions polylineOptions;
 	public Polyline polyline;
-	
+
 	public BusRoute(){
 		setDescription(setMapLineColor(setTextingKey(null)));
 		setHideRouteLine(setCheckedOnMap(setShowPolygon(false)));
@@ -28,7 +28,7 @@ public class BusRoute{
 		setMapZoom(setOrder(setRouteID(-1)));
 		setStops(null);
 	}
-	
+
 	@Override
 	public String toString(){
 		return getDescription() + "(" + getRouteID() + ")";

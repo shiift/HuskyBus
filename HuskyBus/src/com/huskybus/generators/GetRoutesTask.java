@@ -19,7 +19,7 @@ public class GetRoutesTask extends AsyncTask<Void, Void, ArrayList<BusRoute>> {
 
 	public Activity activity;
 	public AsyncResponse delegate;
-	
+
 	public GetRoutesTask(Activity activity, AsyncResponse delegate){
 		this.activity = activity;
 		this.delegate = delegate;
@@ -29,14 +29,14 @@ public class GetRoutesTask extends AsyncTask<Void, Void, ArrayList<BusRoute>> {
 	protected ArrayList<BusRoute> doInBackground(Void ... args) {
 		File root = android.os.Environment.getExternalStorageDirectory();
 		File file = new File(root.getAbsolutePath() + activity.getString(R.string.storage_path) + activity.getString(R.string.routes_file));
-		
+
 		URLFileSaver.activity = activity;
-		
+
 		Calendar lastModDate = Calendar.getInstance();
 		lastModDate.setTime(new Date(file.lastModified()));
 		Calendar currentDate = Calendar.getInstance();
 		currentDate.add(Calendar.MONTH, -1);
-		
+
 		if(!(file.exists() && !file.isDirectory())
 				|| lastModDate.compareTo(currentDate) < 0) {
 			String urlString = activity.getString(R.string.routes_url);
@@ -48,7 +48,7 @@ public class GetRoutesTask extends AsyncTask<Void, Void, ArrayList<BusRoute>> {
 				return null;
 			}
 		}
-		
+
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(file);

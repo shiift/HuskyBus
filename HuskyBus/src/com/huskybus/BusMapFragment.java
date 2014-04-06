@@ -30,7 +30,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 	MapManager _mapManager;
 	GoogleMap _map;
 	GetRoutesTask _dft;
-	
+
 	//other member variables
 	View _rootView;
 
@@ -45,19 +45,19 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 		View rootView = inflater.inflate(R.layout.fragment_busmap, container,
 				false);
 		_rootView = rootView;
-		
+
 		Log.d("mapviewinit", "getting routes from web");
-		
+
 		_dft = new GetRoutesTask(getActivity(), this);
 		_dft.execute();
-		
+
 		Log.d("mapviewinit", "creating map manager");
-		
+
 		FragmentManager manager = getActivity().getSupportFragmentManager();
 		SupportMapFragment mapFragment =(SupportMapFragment) manager.findFragmentById(R.id.busmap);
 		_map = mapFragment.getMap();
 		adjustMap(_map);
-		
+
 		_mapManager = new MapManager(this);
 
 		return rootView;
@@ -86,22 +86,22 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 	public void processFinish(ArrayList<BusRoute> busRoutes) {
 		if(busRoutes == null){
 			new AlertDialog.Builder(this.getActivity())
-		    .setTitle("Could not connect to the network")
-		    .setMessage("Press okay to retry")
-		    .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) { 
-		        	// Do nothing
-		        }
-		     })
-		    .setPositiveButton(com.huskybus.R.string.retry, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) { 
-		        	_dft.execute();
-		        }
-		     })
-		    .show();
-			
-//			MultiSpinner ms = (MultiSpinner) _rootView.findViewById(R.id.multi_spinner);
-//			ms.setItems(null, "No Routes Found", this);
+			.setTitle("Could not connect to the network")
+			.setMessage("Press okay to retry")
+			.setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) { 
+					// Do nothing
+				}
+			})
+			.setPositiveButton(com.huskybus.R.string.retry, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) { 
+					_dft.execute();
+				}
+			})
+			.show();
+
+			//			MultiSpinner ms = (MultiSpinner) _rootView.findViewById(R.id.multi_spinner);
+			//			ms.setItems(null, "No Routes Found", this);
 		}else{
 			createLines(busRoutes);
 		}
@@ -109,13 +109,13 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 
 	@Override
 	public void onItemsSelected(boolean[] selected) {
-//		for(int i = 0; i < _lineList.size(); i++){
-//			Polyline cLine = _lineList.get(i);
-//			cLine.setVisible(selected[i]);
-//			for(int j = 0; j < _lineToMarker.get(cLine).size(); j++){
-//				_lineToMarker.get(cLine).get(j).setVisible(selected[i]);
-//			}
-//		}
+		//		for(int i = 0; i < _lineList.size(); i++){
+		//			Polyline cLine = _lineList.get(i);
+		//			cLine.setVisible(selected[i]);
+		//			for(int j = 0; j < _lineToMarker.get(cLine).size(); j++){
+		//				_lineToMarker.get(cLine).get(j).setVisible(selected[i]);
+		//			}
+		//		}
 	}
 
 	@Override

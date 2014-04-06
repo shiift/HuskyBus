@@ -11,11 +11,11 @@ import com.huskybus.generators.BusStop;
 
 public class MarkerManager{
 	private ArrayList<MapMarker> _markers;
-	
+
 	public MarkerManager(){
 		_markers = new ArrayList<MapMarker>();
 	}
-	
+
 	public void addMarker(BusStop busStop, BusRoute busRoute){
 		int mPosition = getStopMarkerIndex(busStop);
 		if(mPosition != -1){			// marker already in array at position mPosition
@@ -34,17 +34,17 @@ public class MarkerManager{
 			copyStopInfo(busStop, mapMarker);
 			mapMarker.getRoutes().add(busRoute);
 			MarkerOptions newOptions = new MarkerOptions()
-											.anchor(0.5f, 1.0f)
-											.position(new LatLng(busStop.getLatitude(), busStop.getLongitude()))
-											.title(generateMarkerTitle(busStop.getDescription(), busStop.getTextingKey()))
-											.icon(BitmapDescriptorFactory.fromResource(R.drawable.stopmarker))
-											.visible(true);
+			.anchor(0.5f, 1.0f)
+			.position(new LatLng(busStop.getLatitude(), busStop.getLongitude()))
+			.title(generateMarkerTitle(busStop.getDescription(), busStop.getTextingKey()))
+			.icon(BitmapDescriptorFactory.fromResource(R.drawable.stopmarker))
+			.visible(true);
 			mapMarker.setMarkerOptions(newOptions);
 			_markers.add(mapMarker);
 		}
-		
+
 	}
-	
+
 	private String generateMarkerTitle(String description, String textingKey){
 		if(textingKey.equals("")){
 			return description;
@@ -70,7 +70,7 @@ public class MarkerManager{
 		}
 		return -1;
 	}
-	
+
 	private boolean isStopInMapMarker(BusStop stop, MapMarker mapMarker){
 		String description1 = stop.getDescription().replaceAll("\\W", "");
 		String description2 = mapMarker.getDescription().replaceAll("\\W", "");
@@ -88,7 +88,7 @@ public class MarkerManager{
 		}
 		return false;
 	}
-	
+
 	public ArrayList<MapMarker> getMarkers(){
 		return _markers;
 	}
