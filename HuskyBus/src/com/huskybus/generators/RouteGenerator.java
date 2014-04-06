@@ -2,7 +2,6 @@ package com.huskybus.generators;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URL;
 import java.util.ArrayList;
 
 import com.eclipsesource.json.JsonArray;
@@ -28,22 +27,22 @@ public class RouteGenerator {
 	public static BusRoute generateRoute(JsonObject jo){
 		BusRoute newRoute = new BusRoute();
 		
-		newRoute.description 	= jo.get("Description").asString();
-		newRoute.textingKey		= jo.get("TextingKey").asString();
-		newRoute.mapLineColor	= jo.get("MapLineColor").asString();
+		newRoute.setDescription(jo.get("Description").asString());
+		newRoute.setTextingKey(jo.get("TextingKey").asString());
+		newRoute.setMapLineColor(jo.get("MapLineColor").asString());
 		
-		newRoute.hideRouteLine	= jo.get("HideRouteLine").asBoolean();
-		newRoute.isCheckedOnMap	= jo.get("IsCheckedOnMap").asBoolean();
-		newRoute.isVisibleOnMap	= jo.get("IsVisibleOnMap").asBoolean();
-		newRoute.showPolygon	= jo.get("ShowPolygon").asBoolean();
+		newRoute.setHideRouteLine(jo.get("HideRouteLine").asBoolean());
+		newRoute.setCheckedOnMap(jo.get("IsCheckedOnMap").asBoolean());
+		newRoute.setVisibleOnMap(jo.get("IsVisibleOnMap").asBoolean());
+		newRoute.setShowPolygon(jo.get("ShowPolygon").asBoolean());
 		
-		newRoute.mapLatitude	= jo.get("MapLatitude").asDouble();
-		newRoute.mapLongitude	= jo.get("MapLongitude").asDouble();
+		newRoute.setMapLatitude(jo.get("MapLatitude").asDouble());
+		newRoute.setMapLongitude(jo.get("MapLongitude").asDouble());
 		
-		newRoute.mapZoom		= jo.get("MapZoom").asInt();
-		newRoute.order			= jo.get("Order").asInt();
-		newRoute.routeID		= jo.get("RouteID").asInt();
-		newRoute.stops			= getStops(jo.get("Stops").asArray());
+		newRoute.setMapZoom(jo.get("MapZoom").asInt());
+		newRoute.setOrder(jo.get("Order").asInt());
+		newRoute.setRouteID(jo.get("RouteID").asInt());
+		newRoute.setStops(getStops(jo.get("Stops").asArray()));
 		
 		return newRoute;
 	}
@@ -60,24 +59,24 @@ public class RouteGenerator {
 	public static BusStop generateStop(JsonObject jo){
 		BusStop newStop = new BusStop();
 		
-		newStop.description			= jo.get("Description").asString();
-		newStop.textingKey			= jo.get("TextingKey").asString();
+		newStop.setDescription(jo.get("Description").asString());
+		newStop.setTextingKey(jo.get("TextingKey").asString());
 		
-		newStop.latitude			= jo.get("Latitude").asDouble();
-		newStop.longitude			= jo.get("Longitude").asDouble();
-		newStop.heading				= jo.get("Heading").asDouble();
+		newStop.setLatitude(jo.get("Latitude").asDouble());
+		newStop.setLongitude(jo.get("Longitude").asDouble());
+		newStop.setHeading(jo.get("Heading").asDouble());
 		
-		newStop.addressID			= jo.get("AddressID").asInt();
-		newStop.maxZoomLevel		= jo.get("MaxZoomLevel").asInt();
-		newStop.order				= jo.get("Order").asInt();
-		newStop.routeID				= jo.get("RouteID").asInt();
-		newStop.routeStopID			= jo.get("RouteStopID").asInt();
-		newStop.secondsAtStop		= jo.get("SecondsAtStop").asInt();
-		newStop.secondsToNextStop	= jo.get("SecondsToNextStop").asInt();
+		newStop.setAddressID(jo.get("AddressID").asInt());
+		newStop.setMaxZoomLevel(jo.get("MaxZoomLevel").asInt());
+		newStop.setOrder(jo.get("Order").asInt());
+		newStop.setRouteID(jo.get("RouteID").asInt());
+		newStop.setRouteStopID(jo.get("RouteStopID").asInt());
+		newStop.setSecondsAtStop(jo.get("SecondsAtStop").asInt());
+		newStop.setSecondsToNextStop(jo.get("SecondsToNextStop").asInt());
 		
-		newStop.showDefaultedOnMap	= jo.get("ShowDefaultedOnMap").asBoolean();
-		newStop.showEstimatesOnMap	= jo.get("ShowEstimatesOnMap").asBoolean();
-		newStop.mapPoints			= getPoints(jo.get("MapPoints").asArray());
+		newStop.setShowDefaultedOnMap(jo.get("ShowDefaultedOnMap").asBoolean());
+		newStop.setShowEstimatesOnMap(jo.get("ShowEstimatesOnMap").asBoolean());
+		newStop.setMapPoints(getPoints(jo.get("MapPoints").asArray()));
 		
 		return newStop;
 	}

@@ -1,13 +1,9 @@
 package com.huskybus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map.Entry;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,22 +16,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.huskybus.MultiSpinner.MultiSpinnerListener;
 import com.huskybus.generators.BusRoute;
-import com.huskybus.generators.BusStop;
 import com.huskybus.generators.GetRoutesTask;
 import com.huskybus.generators.GetRoutesTask.AsyncResponse;
 import com.huskybus.managers.MapManager;
-import com.huskybus.R;
+import com.huskybus.managers.MapManager.MapManagerResponse;
+import com.huskybus.managers.MapMarker;
 
-public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpinnerListener{
+public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpinnerListener, MapManagerResponse{
 
 	//threads and tasks
 	MapManager _mapManager;
+	GoogleMap _map;
 	GetRoutesTask _dft;
 	
 	//other member variables
@@ -62,10 +55,10 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 		
 		FragmentManager manager = getActivity().getSupportFragmentManager();
 		SupportMapFragment mapFragment =(SupportMapFragment) manager.findFragmentById(R.id.busmap);
-		GoogleMap map = mapFragment.getMap();
-		adjustMap(map);
+		_map = mapFragment.getMap();
+		adjustMap(_map);
 		
-		_mapManager = new MapManager(map);
+		_mapManager = new MapManager(this);
 
 		return rootView;
 	}
@@ -85,7 +78,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 	public void createLines(ArrayList<BusRoute> busRoutes){
 		Log.d("mapviewinit-buslines","adding bus lines to the map");
 		_mapManager.initBusRoutes(busRoutes);
-		_mapManager.run();
+		_mapManager.execute();
 		Log.d("mapviewinit-buslines", "done adding bus lines");
 	}
 
@@ -123,6 +116,17 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 //				_lineToMarker.get(cLine).get(j).setVisible(selected[i]);
 //			}
 //		}
+	}
+
+	@Override
+	public void addLines(ArrayList<BusRoute> busRoutes, ArrayList<MapMarker> mapMarkers){
+		for(int i = 0; i < busRoutes.size(); i++){
+			_map.addPolyline(busRoutes.get(i).polylineOptions);
+		}
+		for(int i = 0; i < mapMarkers.size(); i++){
+			Log.d("mapviewinit", mapMarkers.get(i).getDescription());
+			_map.addMarker(mapMarkers.get(i).getMarkerOptions());
+		}
 	}
 
 }
