@@ -1,6 +1,7 @@
 package com.huskybus;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -27,12 +28,15 @@ import com.huskybus.managers.MapMarker;
 public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpinnerListener, MapManagerResponse{
 
 	//threads and tasks
-	MapManager _mapManager;
-	GoogleMap _map;
-	GetRoutesTask _dft;
+	private MapManager _mapManager;
+	private GoogleMap _map;
+	private GetRoutesTask _dft;
+	private MultiSpinner _ms;
 
 	//other member variables
-	View _rootView;
+	private View _rootView;
+	private ArrayList<BusRoute> _busRoutes;
+	private ArrayList<MapMarker> _mapMarkers;
 
 	public BusMapFragment() {
 		_dft = null;
@@ -46,12 +50,13 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 				false);
 		_rootView = rootView;
 
-		Log.d("mapviewinit", "getting routes from web");
-
 		_dft = new GetRoutesTask(getActivity(), this);
 		_dft.execute();
+		
+		_ms = (MultiSpinner) _rootView.findViewById(R.id.multi_spinner);
+		_ms.setItems(new ArrayList<BusRoute>(), "Loading Stops...", this);
 
-		Log.d("mapviewinit", "creating map manager");
+		Log.d("mapviewinit", "Creating map manager");
 
 		FragmentManager manager = getActivity().getSupportFragmentManager();
 		SupportMapFragment mapFragment =(SupportMapFragment) manager.findFragmentById(R.id.busmap);
@@ -76,10 +81,10 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 	}
 
 	public void createLines(ArrayList<BusRoute> busRoutes){
-		Log.d("mapviewinit-buslines","adding bus lines to the map");
+		Log.d("mapviewinit-buslines","Adding bus lines to the map");
 		_mapManager.initBusRoutes(busRoutes);
 		_mapManager.execute();
-		Log.d("mapviewinit-buslines", "done adding bus lines");
+		Log.d("mapviewinit-buslines", "Done adding bus lines");
 	}
 
 	@Override
@@ -100,33 +105,45 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 			})
 			.show();
 
-			//			MultiSpinner ms = (MultiSpinner) _rootView.findViewById(R.id.multi_spinner);
-			//			ms.setItems(null, "No Routes Found", this);
+			MultiSpinner ms = (MultiSpinner) _rootView.findViewById(R.id.multi_spinner);
+			ms.setItems(null, "No Routes Found", this);
 		}else{
 			createLines(busRoutes);
 		}
 	}
 
 	@Override
-	public void onItemsSelected(boolean[] selected) {
-		//		for(int i = 0; i < _lineList.size(); i++){
-		//			Polyline cLine = _lineList.get(i);
-		//			cLine.setVisible(selected[i]);
-		//			for(int j = 0; j < _lineToMarker.get(cLine).size(); j++){
-		//				_lineToMarker.get(cLine).get(j).setVisible(selected[i]);
-		//			}
-		//		}
+	public void addLines(ArrayList<BusRoute> busRoutes, ArrayList<MapMarker> mapMarkers){
+		_busRoutes = busRoutes;
+		_mapMarkers = mapMarkers;
+		for(int i = 0; i < busRoutes.size(); i++){
+			_busRoutes.get(i).setPolyline(_map.addPolyline(busRoutes.get(i).getPolylineOptions()));
+		}
+		for(int i = 0; i < mapMarkers.size(); i++){
+			Log.d("mapviewinit", "Added: " + mapMarkers.get(i).getDescription());
+			_mapMarkers.get(i).setMarker(_map.addMarker(mapMarkers.get(i).getMarkerOptions()));
+		}
+		_ms.setItems(busRoutes, "Select Bus Routes", this);
 	}
 
 	@Override
-	public void addLines(ArrayList<BusRoute> busRoutes, ArrayList<MapMarker> mapMarkers){
-		for(int i = 0; i < busRoutes.size(); i++){
-			_map.addPolyline(busRoutes.get(i).polylineOptions);
+	public void onItemsSelected(boolean[] selected) {
+		LinkedList<BusRoute> enabledLines = new LinkedList<BusRoute>();
+		for(int i = 0; i < _mapMarkers.size(); i++){
+			_mapMarkers.get(i).getMarker().setVisible(false);
 		}
-		for(int i = 0; i < mapMarkers.size(); i++){
-			Log.d("mapviewinit", mapMarkers.get(i).getDescription());
-			_map.addMarker(mapMarkers.get(i).getMarkerOptions());
+		for(int i = 0; i < selected.length; i++){
+			_busRoutes.get(i).getPolyline().setVisible(selected[i]);
+			if(selected[i]){
+				enabledLines.add(_busRoutes.get(i));
+			}
+		}
+		for(int i = 0; i < _mapMarkers.size(); i++){
+			for(int j = 0; j < enabledLines.size(); j++){
+				if(_mapMarkers.get(i).getRoutes().contains(enabledLines.get(j))){
+					_mapMarkers.get(i).getMarker().setVisible(true);
+				}
+			}
 		}
 	}
-
 }

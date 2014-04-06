@@ -1,5 +1,8 @@
 package com.huskybus.generators;
 
+import java.util.ArrayList;
+
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -17,8 +20,9 @@ public class BusRoute{
 	private int order;
 	private int routeID;
 	private BusStop[] stops;
-	public PolylineOptions polylineOptions;
-	public Polyline polyline;
+	
+	private PolylineOptions polylineOptions;
+	private Polyline polyline;
 
 	public BusRoute(){
 		setDescription(setMapLineColor(setTextingKey(null)));
@@ -143,5 +147,21 @@ public class BusRoute{
 
 	public void setStops(BusStop[] stops) {
 		this.stops = stops;
+	}
+
+	public Polyline getPolyline() {
+		return polyline;
+	}
+
+	public void setPolyline(Polyline polyline) {
+		this.polyline = polyline;
+	}
+
+	public PolylineOptions getPolylineOptions() {
+		return polylineOptions;
+	}
+
+	public void setPolylineOptions(PolylineOptions polylineOptions) {
+		this.polylineOptions = polylineOptions;
 	}
 }

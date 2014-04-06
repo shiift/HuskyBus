@@ -5,11 +5,11 @@
     android:orientation="vertical"
     tools:context=".MainActivity$DummySectionFragment" >
 
-<!--    <com.huskybus.MultiSpinner
+    <com.huskybus.MultiSpinner
         android:id="@+id/multi_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5" /> -->
+        android:layout_weight="0.5" />
 
     <fragment
         android:id="@+id/busmap"

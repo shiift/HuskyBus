@@ -1,8 +1,10 @@
 package com.huskybus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.huskybus.R;
+import com.huskybus.generators.BusRoute;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,12 +12,13 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener, OnCancelListener {
 
-	private List<String> items;
+	private ArrayList<BusRoute> busRoutes;
 	private boolean[] selected;
 	private String defaultText;
 	private MultiSpinnerListener listener;
@@ -45,9 +48,9 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener,
 		// refresh text on spinner
 		StringBuffer spinnerBuffer = new StringBuffer();
 		boolean someUnselected = false;
-		for (int i = 0; i < items.size(); i++) {
+		for (int i = 0; i < busRoutes.size(); i++) {
 			if (selected[i] == true) {
-				spinnerBuffer.append(items.get(i));
+				spinnerBuffer.append(busRoutes.get(i).getDescription());
 				spinnerBuffer.append(", ");
 			} else {
 				someUnselected = true;
@@ -70,34 +73,38 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener,
 
 	@Override
 	public boolean performClick() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-		builder.setMultiChoiceItems(
-				items.toArray(new CharSequence[items.size()]), selected, this);
-		builder.setPositiveButton(R.string.ok,
-				new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
+		if(selected.length != 0){
+			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+			CharSequence[] cs = new CharSequence[busRoutes.size()];
+			for(int i = 0; i < busRoutes.size(); i++){
+				cs[i] = busRoutes.get(i).getDescription();
 			}
-		});
-		builder.setOnCancelListener(this);
-		builder.show();
+			builder.setMultiChoiceItems(
+					cs, selected, this);
+			builder.setPositiveButton(R.string.ok,
+					new DialogInterface.OnClickListener() {
+	
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+			builder.setOnCancelListener(this);
+			builder.show();
+		}
 		return true;
 	}
 
-	public void setItems(List<String> items, String allText,
+	public void setItems(ArrayList<BusRoute> items, String allText,
 			MultiSpinnerListener listener) {
-		this.items = items;
+		this.busRoutes = items;
 		this.defaultText = allText;
 		this.listener = listener;
-
 		// all deselected by default
 		selected = new boolean[items.size()];
 		for (int i = 0; i < selected.length; i++) {
 			selected[i] = false;
 		}
-
 		// all text on the spinner
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
 				android.R.layout.simple_spinner_item, new String[] { allText });

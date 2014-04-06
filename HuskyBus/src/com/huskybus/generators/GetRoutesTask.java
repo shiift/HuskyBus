@@ -39,6 +39,7 @@ public class GetRoutesTask extends AsyncTask<Void, Void, ArrayList<BusRoute>> {
 
 		if(!(file.exists() && !file.isDirectory())
 				|| lastModDate.compareTo(currentDate) < 0) {
+			Log.d("mapviewinit", "Getting routes from web");
 			String urlString = activity.getString(R.string.routes_url);
 			try {
 				URLFileSaver.downloadFromURL(urlString, "bus_routes.txt");

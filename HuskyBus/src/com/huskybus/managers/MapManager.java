@@ -42,9 +42,6 @@ public class MapManager extends AsyncTask<Void, Void, ArrayList<MapMarker>> {
 
 			polylineOptions.color(Color.parseColor(cRoute.getMapLineColor()));
 			polylineOptions.visible(false);
-			if(cRoute.getDescription().matches("Blue")){
-				polylineOptions.visible(true);
-			}
 
 			for(int j = 0; j < cRoute.getStops().length; j++){
 				BusStop cStop = cRoute.getStops()[j];
@@ -55,7 +52,7 @@ public class MapManager extends AsyncTask<Void, Void, ArrayList<MapMarker>> {
 				}
 				_markerManager.addMarker(cStop, cRoute);
 			}
-			cRoute.polylineOptions = polylineOptions;
+			cRoute.setPolylineOptions(polylineOptions);
 			_busRoutes.add(cRoute);
 		}
 		return _markerManager.getMarkers();

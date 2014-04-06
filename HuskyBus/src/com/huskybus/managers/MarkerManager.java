@@ -34,11 +34,11 @@ public class MarkerManager{
 			copyStopInfo(busStop, mapMarker);
 			mapMarker.getRoutes().add(busRoute);
 			MarkerOptions newOptions = new MarkerOptions()
-			.anchor(0.5f, 1.0f)
-			.position(new LatLng(busStop.getLatitude(), busStop.getLongitude()))
-			.title(generateMarkerTitle(busStop.getDescription(), busStop.getTextingKey()))
-			.icon(BitmapDescriptorFactory.fromResource(R.drawable.stopmarker))
-			.visible(true);
+				.anchor(0.5f, 1.0f)
+				.position(new LatLng(busStop.getLatitude(), busStop.getLongitude()))
+				.title(generateMarkerTitle(busStop.getDescription(), busStop.getTextingKey()))
+				.icon(BitmapDescriptorFactory.fromResource(R.drawable.stopmarker))
+				.visible(false);
 			mapMarker.setMarkerOptions(newOptions);
 			_markers.add(mapMarker);
 		}
