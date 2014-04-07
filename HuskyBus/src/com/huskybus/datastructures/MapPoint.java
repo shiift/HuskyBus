@@ -1,4 +1,4 @@
-package com.huskybus.generators;
+package com.huskybus.datastructures;
 
 public class MapPoint{
 	public double heading, latitude, longitude;

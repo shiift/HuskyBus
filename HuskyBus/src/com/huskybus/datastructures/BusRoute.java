@@ -1,6 +1,7 @@
-package com.huskybus.generators;
+package com.huskybus.datastructures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
@@ -19,10 +20,12 @@ public class BusRoute{
 	private int mapZoom;
 	private int order;
 	private int routeID;
-	private BusStop[] stops;
+	private RouteStop[] stops;
 	
 	private PolylineOptions polylineOptions;
 	private Polyline polyline;
+	
+	private HashMap<String, BusStop> busStops;
 
 	public BusRoute(){
 		setDescription(setMapLineColor(setTextingKey(null)));
@@ -31,6 +34,7 @@ public class BusRoute{
 		setMapLatitude(setMapLongitude(-1));
 		setMapZoom(setOrder(setRouteID(-1)));
 		setStops(null);
+		busStops = new HashMap<String, BusStop>();
 	}
 
 	@Override
@@ -141,11 +145,11 @@ public class BusRoute{
 		return routeID;
 	}
 
-	public BusStop[] getStops() {
+	public RouteStop[] getStops() {
 		return stops;
 	}
 
-	public void setStops(BusStop[] stops) {
+	public void setStops(RouteStop[] stops) {
 		this.stops = stops;
 	}
 
@@ -163,5 +167,9 @@ public class BusRoute{
 
 	public void setPolylineOptions(PolylineOptions polylineOptions) {
 		this.polylineOptions = polylineOptions;
+	}
+
+	public void addBusStop(BusStop busStop) {
+		busStops.put(busStop.getDescription(), busStop);
 	}
 }

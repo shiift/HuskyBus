@@ -18,12 +18,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.huskybus.MultiSpinner.MultiSpinnerListener;
-import com.huskybus.generators.BusRoute;
-import com.huskybus.generators.GetRoutesTask;
-import com.huskybus.generators.GetRoutesTask.AsyncResponse;
+import com.huskybus.datastructures.BusRoute;
+import com.huskybus.datastructures.BusStop;
 import com.huskybus.managers.MapManager;
 import com.huskybus.managers.MapManager.MapManagerResponse;
-import com.huskybus.managers.MapMarker;
+import com.huskybus.tools.GetRoutesTask;
+import com.huskybus.tools.GetRoutesTask.AsyncResponse;
 
 public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpinnerListener, MapManagerResponse{
 
@@ -36,7 +36,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 	//other member variables
 	private View _rootView;
 	private ArrayList<BusRoute> _busRoutes;
-	private ArrayList<MapMarker> _mapMarkers;
+	private ArrayList<BusStop> _mapMarkers;
 
 	public BusMapFragment() {
 		_dft = null;
@@ -113,7 +113,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 	}
 
 	@Override
-	public void addLines(ArrayList<BusRoute> busRoutes, ArrayList<MapMarker> mapMarkers){
+	public void addLines(ArrayList<BusRoute> busRoutes, ArrayList<BusStop> mapMarkers){
 		_busRoutes = busRoutes;
 		_mapMarkers = mapMarkers;
 		for(int i = 0; i < busRoutes.size(); i++){
@@ -140,7 +140,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 		}
 		for(int i = 0; i < _mapMarkers.size(); i++){
 			for(int j = 0; j < enabledLines.size(); j++){
-				if(_mapMarkers.get(i).getRoutes().contains(enabledLines.get(j))){
+				if(_mapMarkers.get(i).containsBusRoute(enabledLines.get(j))){
 					_mapMarkers.get(i).getMarker().setVisible(true);
 				}
 			}

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.huskybus.R;
-import com.huskybus.generators.BusRoute;
+import com.huskybus.datastructures.BusRoute;
 
 import android.app.AlertDialog;
 import android.content.Context;

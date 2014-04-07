@@ -6,21 +6,23 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.huskybus.R;
-import com.huskybus.generators.BusRoute;
-import com.huskybus.generators.BusStop;
+import com.huskybus.datastructures.BusRoute;
+import com.huskybus.datastructures.BusStop;
+import com.huskybus.datastructures.RouteStop;
 
 public class MarkerManager{
-	private ArrayList<MapMarker> _markers;
+	private ArrayList<BusStop> _markers;
 
 	public MarkerManager(){
-		_markers = new ArrayList<MapMarker>();
+		_markers = new ArrayList<BusStop>();
 	}
 
-	public void addMarker(BusStop busStop, BusRoute busRoute){
+	public BusStop addMarker(RouteStop busStop, BusRoute busRoute){
 		int mPosition = getStopMarkerIndex(busStop);
+		BusStop mapMarker;
 		if(mPosition != -1){			// marker already in array at position mPosition
-			MapMarker mapMarker = _markers.get(mPosition);
-			mapMarker.getRoutes().add(busRoute);
+			mapMarker = _markers.get(mPosition);
+			mapMarker.addBusRoute(busRoute, busStop);
 			if(mapMarker.getTextingKey().equals("") && !busStop.getTextingKey().equals("")){
 				mapMarker.setTextingKey(busStop.getTextingKey());
 				mapMarker.getMarkerOptions().title(generateMarkerTitle(busStop.getDescription(), busStop.getTextingKey()));
@@ -30,9 +32,9 @@ public class MarkerManager{
 				mapMarker.getMarkerOptions().title(generateMarkerTitle(busStop.getDescription(), busStop.getTextingKey()));
 			}
 		}else{							// marker not in array
-			MapMarker mapMarker = new MapMarker();
-			copyStopInfo(busStop, mapMarker);
-			mapMarker.getRoutes().add(busRoute);
+			mapMarker = new BusStop();
+			mapMarker.copyFrom(busStop);
+			mapMarker.addBusRoute(busRoute, busStop);
 			MarkerOptions newOptions = new MarkerOptions()
 				.anchor(0.5f, 1.0f)
 				.position(new LatLng(busStop.getLatitude(), busStop.getLongitude()))
@@ -42,7 +44,7 @@ public class MarkerManager{
 			mapMarker.setMarkerOptions(newOptions);
 			_markers.add(mapMarker);
 		}
-
+		return mapMarker;
 	}
 
 	private String generateMarkerTitle(String description, String textingKey){
@@ -55,14 +57,7 @@ public class MarkerManager{
 		return description + " (" + textingKey + ")";
 	}
 
-	private void copyStopInfo(BusStop cStop, MapMarker stop) {
-		stop.setDescription(cStop.getDescription());
-		stop.setTextingKey(cStop.getTextingKey());
-		stop.setLatitude(cStop.getLatitude());
-		stop.setLongitude(cStop.getLongitude());
-	}
-
-	private int getStopMarkerIndex(BusStop cStop) {
+	private int getStopMarkerIndex(RouteStop cStop) {
 		for(int i = 0; i < _markers.size(); i++){
 			if(isStopInMapMarker(cStop, _markers.get(i))){
 				return i;
@@ -71,7 +66,7 @@ public class MarkerManager{
 		return -1;
 	}
 
-	private boolean isStopInMapMarker(BusStop stop, MapMarker mapMarker){
+	private boolean isStopInMapMarker(RouteStop stop, BusStop mapMarker){
 		String description1 = stop.getDescription().replaceAll("\\W", "");
 		String description2 = mapMarker.getDescription().replaceAll("\\W", "");
 		if(description1.equalsIgnoreCase(description2)){
@@ -89,7 +84,7 @@ public class MarkerManager{
 		return false;
 	}
 
-	public ArrayList<MapMarker> getMarkers(){
+	public ArrayList<BusStop> getMarkers(){
 		return _markers;
 	}
 }

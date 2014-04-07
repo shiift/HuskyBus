@@ -1,4 +1,4 @@
-package com.huskybus.generators;
+package com.huskybus.datastructures;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -47,8 +47,8 @@ public class RouteGenerator {
 		return newRoute;
 	}
 
-	public static BusStop[] getStops(JsonArray jsonStopArray){
-		BusStop[] stopArray = new BusStop[jsonStopArray.size()];
+	public static RouteStop[] getStops(JsonArray jsonStopArray){
+		RouteStop[] stopArray = new RouteStop[jsonStopArray.size()];
 
 		for(int i=0; i<jsonStopArray.size(); i++){
 			stopArray[i] = generateStop(jsonStopArray.get(i).asObject());
@@ -56,8 +56,8 @@ public class RouteGenerator {
 		return stopArray;
 	}
 
-	public static BusStop generateStop(JsonObject jo){
-		BusStop newStop = new BusStop();
+	public static RouteStop generateStop(JsonObject jo){
+		RouteStop newStop = new RouteStop();
 
 		newStop.setDescription(jo.get("Description").asString());
 		newStop.setTextingKey(jo.get("TextingKey").asString());

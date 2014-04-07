@@ -1,4 +1,4 @@
-package com.huskybus.generators;
+package com.huskybus.tools;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,7 +11,8 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.huskybus.tools.URLFileSaver;
+import com.huskybus.datastructures.BusRoute;
+import com.huskybus.datastructures.RouteGenerator;
 import com.huskybus.R;
 
 

@@ -1,6 +1,6 @@
-package com.huskybus.generators;
+package com.huskybus.datastructures;
 
-public class BusStop{
+public class RouteStop{
 	private String description;
 	private String textingKey;
 	private double heading;
@@ -17,7 +17,7 @@ public class BusStop{
 	private boolean showEstimatesOnMap;
 	private MapPoint[] mapPoints;
 
-	public BusStop(){
+	public RouteStop(){
 		setDescription(setTextingKey(null));
 		setLatitude(setLongitude(setHeading(-1)));
 		setAddressID(setMaxZoomLevel(setOrder(setRouteID(setRouteStopID(setSecondsAtStop(setSecondsToNextStop(-1)))))));

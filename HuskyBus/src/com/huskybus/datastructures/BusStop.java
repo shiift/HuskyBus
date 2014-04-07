@@ -1,26 +1,31 @@
-package com.huskybus.managers;
+package com.huskybus.datastructures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.huskybus.generators.BusRoute;
 
-public class MapMarker {
+public class BusStop {
 
 	private String description;
 	private String textingKey;
-	private ArrayList<BusRoute> routes;
 	private double longitude;
 	private double latitude;
+	
+	private HashMap<Integer, BusRoute> busRoutes;
+	private HashMap<Integer, RouteStop> stopInfo;
+	
 	private MarkerOptions markerOptions;
 	private Marker marker; 
 
-	public MapMarker(){
-		setRoutes(new ArrayList<BusRoute>());
+	public BusStop(){
 		setDescription("");
 		setLongitude(0);
 		setLatitude(0);
+		
+		busRoutes = new HashMap<Integer, BusRoute>();
+		stopInfo = new HashMap<Integer, RouteStop>();
 	}
 
 	/**
@@ -49,20 +54,6 @@ public class MapMarker {
 	 */
 	public void setTextingKey(String textingKey) {
 		this.textingKey = textingKey;
-	}
-
-	/**
-	 * @return the routes
-	 */
-	public ArrayList<BusRoute> getRoutes() {
-		return routes;
-	}
-
-	/**
-	 * @param routes the routes to set
-	 */
-	public void setRoutes(ArrayList<BusRoute> routes) {
-		this.routes = routes;
 	}
 
 	/**
@@ -120,5 +111,32 @@ public class MapMarker {
 	public void setMarker(Marker marker) {
 		this.marker = marker;
 	}
+	
+	public HashMap<Integer, BusRoute> getRotues(){
+		return busRoutes;
+	}
 
+	public void copyFrom(RouteStop busStop) {
+		setDescription(busStop.getDescription());
+		setTextingKey(busStop.getTextingKey());
+		setLatitude(busStop.getLatitude());
+		setLongitude(busStop.getLongitude());
+	}
+	
+	public void addBusRoute(BusRoute busRoute, RouteStop routeStop){
+		busRoutes.put(busRoute.getRouteID(), busRoute);
+		stopInfo.put(busRoute.getRouteID(), routeStop);
+	}
+	
+	public BusRoute getBusRoute(BusRoute busRoute){
+		return busRoutes.get(busRoute.getDescription());
+	}
+	
+	public RouteStop getRouteStop(BusRoute busRoute){
+		return stopInfo.get(busRoute.getDescription());
+	}
+	
+	public boolean containsBusRoute(BusRoute busRoute){
+		return busRoutes.containsKey(busRoute.getDescription());
+	}
 }
