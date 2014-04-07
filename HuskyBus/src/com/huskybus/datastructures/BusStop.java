@@ -3,6 +3,8 @@ package com.huskybus.datastructures;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -125,18 +127,19 @@ public class BusStop {
 	
 	public void addBusRoute(BusRoute busRoute, RouteStop routeStop){
 		busRoutes.put(busRoute.getRouteID(), busRoute);
+//		Log.d("markermanager", busRoute.getDescription() + ": " + this.getDescription() + " :: " + routeStop.getDescription());
 		stopInfo.put(busRoute.getRouteID(), routeStop);
 	}
 	
 	public BusRoute getBusRoute(BusRoute busRoute){
-		return busRoutes.get(busRoute.getDescription());
+		return busRoutes.get(busRoute.getRouteID());
 	}
 	
 	public RouteStop getRouteStop(BusRoute busRoute){
-		return stopInfo.get(busRoute.getDescription());
+		return stopInfo.get(busRoute.getRouteID());
 	}
 	
 	public boolean containsBusRoute(BusRoute busRoute){
-		return busRoutes.containsKey(busRoute.getDescription());
+		return busRoutes.containsKey(busRoute.getRouteID());
 	}
 }

@@ -7,19 +7,22 @@ import java.util.Map.Entry;
 
 public class BusGraph<E, V>{
 
-	private int size;
 	private HashMap<String, BGVertex> adj;
 	
 	public BusGraph(){
-		size = 0;
 		adj = new HashMap<String, BGVertex>();
 	}
 	
-	public void addStop(BusStop busStopStart, BusRoute busRoute, BusStop busStopEnd){
+	public void addStop(BusStop busStopStart, BusStop busStopEnd, BusRoute busRoute, RouteStop routeStop){
 		if(adj.containsKey(busStopStart.getDescription())){
-			adj.get(busStopStart.getDescription()).addRoute(busRoute, busStopEnd);
+			adj.get(busStopStart.getDescription()).addRoute(busStopEnd, busRoute, routeStop);
 		}else{
-			//adj.put(busStopStart.getDescription(), new BGVertex());
+			adj.put(busStopStart.getDescription(), new BGVertex(busStopStart));
+			adj.get(busStopStart.getDescription()).addRoute(busStopEnd, busRoute, routeStop);
 		}
+	}
+	
+	public BusStop getNextStop(BusStop busStop, int routeID){
+		return adj.get(adj.get(busStop.getDescription()).getNextStopName(routeID)).getStop();
 	}
 }

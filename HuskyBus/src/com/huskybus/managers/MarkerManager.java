@@ -66,7 +66,7 @@ public class MarkerManager{
 		return -1;
 	}
 
-	private boolean isStopInMapMarker(RouteStop stop, BusStop mapMarker){
+	public static boolean isStopInMapMarker(RouteStop stop, BusStop mapMarker){
 		String description1 = stop.getDescription().replaceAll("\\W", "");
 		String description2 = mapMarker.getDescription().replaceAll("\\W", "");
 		if(description1.equalsIgnoreCase(description2)){

@@ -8,21 +8,24 @@ public class BGVertex {
 	private BusStop element;
 	private HashMap<Integer, BGEdge> adjacent;
 
-	public BGVertex(BusStop element, HashMap<Integer, BGEdge> adjacent){
-		this.setElement(element);
-		this.adjacent = adjacent;
+	public BGVertex(BusStop busStop){
+		this.setStop(busStop);
+		this.adjacent = new HashMap<Integer, BGEdge>();
 	}
 
-	public BusStop getElement() {
+	public BusStop getStop() {
 		return element;
 	}
 
-	public void setElement(BusStop element) {
+	public void setStop(BusStop element) {
 		this.element = element;
 	}
 	
-	public void addRoute(BusRoute busRoute, BusStop busStopEnd){
-		
-//		adjacent.put(busRoute.getRouteID(), new BGEdge(busRoute));
+	public String getNextStopName(int routeID){
+		return adjacent.get(routeID).getStopName();
+	}
+	
+	public void addRoute(BusStop busStopEnd, BusRoute busRoute, RouteStop routeStop){
+		adjacent.put(busRoute.getRouteID(), new BGEdge(busStopEnd.getDescription(), busRoute, routeStop));
 	}
 }

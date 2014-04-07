@@ -1,22 +1,22 @@
 package com.huskybus.datastructures;
 
 class BGEdge {
-	private String stopName;
+	private String nextStopName;
 	private BusRoute element;
 	private RouteStop stopInfo;
 	
-	public BGEdge(String stopName, BusRoute element, RouteStop stopInfo){
-		this.setStopName(stopName);
+	public BGEdge(String nextStopName, BusRoute element, RouteStop routeStop){
+		this.setStopName(nextStopName);
 		this.setElement(element);
-		this.setStopInfo(stopInfo);
+		this.setStopInfo(routeStop);
 	}
 
 	public String getStopName() {
-		return stopName;
+		return nextStopName;
 	}
 
 	public void setStopName(String vertexNum) {
-		this.stopName = vertexNum;
+		this.nextStopName = vertexNum;
 	}
 
 	public BusRoute getElement() {
