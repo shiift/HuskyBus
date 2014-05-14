@@ -140,7 +140,7 @@ public class BusMapFragment extends Fragment implements AsyncResponse, MultiSpin
 		}
 		for(int i = 0; i < _mapMarkers.size(); i++){
 			for(int j = 0; j < enabledLines.size(); j++){
-				if(_mapMarkers.get(i).containsBusRoute(enabledLines.get(j))){
+				if(_mapMarkers.get(i).containsBusRoute(enabledLines.get(j).getRouteID())){
 					_mapMarkers.get(i).getMarker().setVisible(true);
 				}
 			}

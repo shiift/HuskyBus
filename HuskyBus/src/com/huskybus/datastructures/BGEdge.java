@@ -1,5 +1,7 @@
 package com.huskybus.datastructures;
 
+import android.util.Log;
+
 class BGEdge {
 	private String nextStopName;
 	private BusRoute element;
@@ -9,6 +11,7 @@ class BGEdge {
 		this.setStopName(nextStopName);
 		this.setElement(element);
 		this.setStopInfo(routeStop);
+		Log.d("bgedge", element.getDescription() + ": " + routeStop.getDescription() + " -> " + nextStopName);
 	}
 
 	public String getStopName() {

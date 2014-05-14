@@ -25,7 +25,7 @@ public class BusRoute{
 	private PolylineOptions polylineOptions;
 	private Polyline polyline;
 	
-	private HashMap<String, BusStop> busStops;
+	private ArrayList<BusStop> busStops;
 
 	public BusRoute(){
 		setDescription(setMapLineColor(setTextingKey(null)));
@@ -34,7 +34,7 @@ public class BusRoute{
 		setMapLatitude(setMapLongitude(-1));
 		setMapZoom(setOrder(setRouteID(-1)));
 		setStops(null);
-		busStops = new HashMap<String, BusStop>();
+		busStops = new ArrayList<BusStop>();
 	}
 
 	@Override
@@ -170,6 +170,10 @@ public class BusRoute{
 	}
 
 	public void addBusStop(BusStop busStop) {
-		busStops.put(busStop.getDescription(), busStop);
+		busStops.add(busStop);
+	}
+	
+	public ArrayList<BusStop> getBusStops(){
+		return busStops;
 	}
 }

@@ -135,11 +135,11 @@ public class BusStop {
 		return busRoutes.get(busRoute.getRouteID());
 	}
 	
-	public RouteStop getRouteStop(BusRoute busRoute){
-		return stopInfo.get(busRoute.getRouteID());
+	public RouteStop getRouteStop(int routeID){
+		return stopInfo.get(routeID);
 	}
 	
-	public boolean containsBusRoute(BusRoute busRoute){
-		return busRoutes.containsKey(busRoute.getRouteID());
+	public boolean containsBusRoute(int routeID){
+		return busRoutes.containsKey(routeID);
 	}
 }

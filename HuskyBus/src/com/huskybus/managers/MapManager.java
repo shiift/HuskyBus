@@ -62,12 +62,10 @@ public class MapManager extends AsyncTask<Void, Void, ArrayList<BusStop>> {
 				BusStop newStop = _markerManager.addMarker(cStop, cRoute);
 				cRoute.addBusStop(newStop);
 				if(j != 0){			// Second through second last
-					bg.addStop(_markerManager.getMarkers().get(j-1), newStop, cRoute, _markerManager.getMarkers().get(j).getRouteStop(cRoute));
-					//Log.d("markermanager", cRoute.getDescription() + ": " + _markerManager.getMarkers().get(j-1).getDescription() + " -> " + _markerManager.getMarkers().get(j).getDescription());
-					//Log.d("markermanager", newStop.getDescription() + " -> " + bg.getNextStop(newStop, cRoute.getRouteID()).getDescription());
+					bg.addStop(_markerManager.getMarkers().get(j-1), newStop, cRoute);
 				}
 				if(j == cRoute.getStops().length - 1){	// Last stop
-					bg.addStop(newStop, _markerManager.getMarkers().get(0), cRoute, _markerManager.getMarkers().get(0).getRouteStop(cRoute));
+					bg.addStop(newStop, _markerManager.getMarkers().get(0), cRoute);
 				}
 			}
 			cRoute.setPolylineOptions(polylineOptions);

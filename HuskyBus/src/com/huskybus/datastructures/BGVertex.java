@@ -6,11 +6,11 @@ import java.util.LinkedList;
 
 public class BGVertex {
 	private BusStop element;
-	private HashMap<Integer, BGEdge> adjacent;
+	private HashMap<Integer, BGEdge> routeHash;
 
 	public BGVertex(BusStop busStop){
 		this.setStop(busStop);
-		this.adjacent = new HashMap<Integer, BGEdge>();
+		this.routeHash = new HashMap<Integer, BGEdge>();
 	}
 
 	public BusStop getStop() {
@@ -21,11 +21,11 @@ public class BGVertex {
 		this.element = element;
 	}
 	
-	public String getNextStopName(int routeID){
-		return adjacent.get(routeID).getStopName();
+	public String getNextStopName(BusRoute busRoute){
+		return routeHash.get(busRoute).getStopName();
 	}
 	
 	public void addRoute(BusStop busStopEnd, BusRoute busRoute, RouteStop routeStop){
-		adjacent.put(busRoute.getRouteID(), new BGEdge(busStopEnd.getDescription(), busRoute, routeStop));
+		routeHash.put(busRoute.getRouteID(), new BGEdge(busStopEnd.getDescription(), busRoute, routeStop));
 	}
 }

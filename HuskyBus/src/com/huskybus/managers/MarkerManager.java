@@ -2,6 +2,8 @@ package com.huskybus.managers;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
